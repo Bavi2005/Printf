@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-int ft_format(char specifier, va_list args)
+int	ft_format(char specifier, va_list args)
 {
 	if (specifier == 'c')
 		return (ft_putchar(va_arg(args, int)));
@@ -33,25 +33,26 @@ int ft_format(char specifier, va_list args)
 	return (0);
 }
 
-int ft_printf(const char *format, ...)
+int	ft_printf(const char *format, ...)
 {
-	va_list args;
-	int i = 0;
-	int len = 0;
+	va_list	args;
+	int		i;
+	int		len;
 
+	i = 0;
+	len = 0;
 	va_start(args, format);
 	while (format[i])
-{
-	if (format[i] == '%' && format[i + 1])
 	{
+		if (format[i] == '%' && format[i + 1])
+		{
+			i++;
+			len += ft_format(format[i], args);
+		}
+		else
+			len += ft_putchar(format[i]);
 		i++;
-		len += ft_format(format[i], args);
 	}
-	else
-		len += ft_putchar(format[i]);
-	i++;
-}
 	va_end(args);
 	return (len);
 }
-
